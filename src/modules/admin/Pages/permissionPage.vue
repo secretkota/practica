@@ -3,17 +3,30 @@ import { ref } from 'vue';
 import RolesForm from '../components/rolesForm.vue';
 import RolesList from '../components/rolesList.vue';
 import { useRolesStore } from '../../../stores/rolesStore';
+import { Role } from '../../../types/roles';
 
 
 const isOpenForm = ref(false)
+const isEdit = ref(false)
+const editingRole = ref<Role | null>(null)
 const rolesStore = useRolesStore()
 
-const openFrom = () => {
-    isOpenForm.value = !isOpenForm.value
+const openCreateForm = () => {
+    isEdit.value = false
+    editingRole.value = null
+    isOpenForm.value = true
+}
+
+const openEditForm = (role: Role) => {
+    isEdit.value = true
+    editingRole.value = role
+    isOpenForm.value = true
 }
 
 const closeForm = () => {
     isOpenForm.value = false
+    isEdit.value = false
+    editingRole.value = null
 }
 
 </script>
@@ -31,7 +44,7 @@ const closeForm = () => {
                 </p>
             </div>
             <div>
-                <button @click="openFrom"
+                <button @click="openCreateForm"
                     class="flex p-2 rounded-base border-2 border-blue-400 text-blue-400 hover:bg-blue-400  hover:text-white trasition-colors duration-200 hover:scale-105 active:bg-blue-400 active:scale-105 active:text-white">
                     <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         fill="none" viewBox="0 0 24 24">
@@ -43,7 +56,14 @@ const closeForm = () => {
             </div>
 
         </div>
-        <RolesForm :open="isOpenForm" @close="closeForm" />
-        <RolesList />
+        <RolesForm 
+            :open="isOpenForm" 
+            :is-edit="isEdit"
+            :role="editingRole"
+            @close="closeForm" 
+            />
+        <RolesList 
+            @edit="openEditForm" 
+            />
     </div>
 </template>

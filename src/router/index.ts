@@ -1,7 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Dashboard from '../components/dashboard/dashboard.vue'
+
 import UsersPage from '../modules/admin/pages/usersPage.vue'
 import PermissionPage from '../modules/admin/Pages/permissionPage.vue'
+import Dashboard from '../components/Dashboard/index.vue'
 
 
 

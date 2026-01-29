@@ -1,18 +1,13 @@
 <script setup lang="ts">
+import { Role } from '../types/roles';
+
 defineProps<{
-    role: {
-        id: number;
-        title: string;
-        description: string;
-    }
+    role: Role
 }>()
 
 defineEmits<{
-    (e: 'delete', role: {
-        id: number;
-        title: string;
-        description: string;
-    }): void
+    (e: 'delete', role: Role): void
+    (e: 'edit', role: Role): void
 }>()
 </script>
 
@@ -26,7 +21,7 @@ defineEmits<{
             </p>
         </div>
         <div id="icons-card" class="flex gap-2">
-            <svg id="icons-card__edit"
+            <svg @click="$emit('edit', role)" id="icons-card__edit"
                 class="w-6 h-6 text-gray-800 hover:text-blue-500 active:text-blue-500 active:scale-105"
                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                 viewBox="0 0 24 24">
