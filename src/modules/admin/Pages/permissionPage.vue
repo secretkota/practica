@@ -4,6 +4,8 @@ import RolesForm from '../components/rolesForm.vue';
 import RolesList from '../components/rolesList.vue';
 import { useRolesStore } from '../../../stores/rolesStore';
 import { Role } from '../../../types/roles';
+import RolesPermissons from '../components/rolesPermissonsPanel.vue';
+import RolesPermissonsPanel from '../components/rolesPermissonsPanel.vue';
 
 
 const isOpenForm = ref(false)
@@ -33,10 +35,10 @@ const closeForm = () => {
 
 
 <template>
-    <div class="p-4 border border-default border-dashed rounded-base">
-        <div class="p-4 border border-default border-dashed rounded-base flex items-center justify-between">
+    <div class="p-4 rounded-base border-default">
+        <div class="p-4 border border-default rounded-base flex items-center justify-between">
             <div>
-                <h2 class="mb-2 text-lg font-semibold text-heading">
+                <h2 class="mb-1 text-lg font-semibold text-heading">
                     Roles
                 </h2>
                 <p class="text-body text-sm">
@@ -65,5 +67,6 @@ const closeForm = () => {
         <RolesList 
             @edit="openEditForm" 
             />
+        <RolesPermissonsPanel />
     </div>
 </template>

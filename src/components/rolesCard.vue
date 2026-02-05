@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useRolesStore } from '../stores/rolesStore';
 import { Role } from '../types/roles';
 
 defineProps<{
@@ -9,11 +10,17 @@ defineEmits<{
     (e: 'delete', role: Role): void
     (e: 'edit', role: Role): void
 }>()
+
+
+const store = useRolesStore()
 </script>
 
 <template>
     <div id="container"
-        class="mt-2 border-b border-gray-300 flex items-start justify-between py-2 hover:bg-gray-50 rounded-base px-2 ">
+        class="mt-2 border-b border-gray-300 flex items-start justify-between py-2 hover:bg-gray-50 rounded-base px-2 "
+        :class="{active: store.selectedRoleId === role.id}"
+        @click="store.selectRole(role.id)"
+        >
         <div id="info-card">
             <h3 id="info-card__title" class="text-md font-medium">{{ role.title }}</h3>
             <p id="info-card__subtitle" class="text-sm text-body mt-1">
