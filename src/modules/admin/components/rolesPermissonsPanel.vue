@@ -40,7 +40,6 @@ function closePanel() {
     class="h-full rounded-base bg-white border border-default
            flex flex-col shadow-sm animate-slide-in"
   >
-    <!-- Header -->
     <div class="p-5 border-b border-default flex items-center justify-between">
       <div>
         <h2 class="text-lg font-semibold text-heading">
@@ -61,7 +60,6 @@ function closePanel() {
       </button>
     </div>
 
-    <!-- Search -->
     <div class="p-5 pb-0">
       <input
         v-model="search"
@@ -73,7 +71,6 @@ function closePanel() {
       />
     </div>
 
-    <!-- Tags -->
     <div class="px-5 pt-4 flex flex-wrap gap-2">
       <span
         v-for="tag in ['Reports (13/14)', 'Admin Panel (15/18)', 'Users (20/40)', 'Permissions (2/6)']"
@@ -85,7 +82,6 @@ function closePanel() {
       </span>
     </div>
 
-    <!-- Permissions -->
     <div class="flex-1 overflow-y-auto p-5 space-y-3">
       <label
         v-for="p in filteredPermissions"
@@ -107,16 +103,6 @@ function closePanel() {
       </label>
     </div>
 
-    <!-- Footer -->
-    <div class="p-5 border-t border-default">
-      <button
-        @click="closePanel"
-        class="w-full py-2 rounded-base
-               bg-blue-500 text-white hover:bg-blue-600 transition"
-      >
-        Close
-      </button>
-    </div>
   </aside>
 </template>
 
