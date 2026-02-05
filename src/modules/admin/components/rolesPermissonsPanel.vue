@@ -10,7 +10,7 @@ const allPermissions = [
   { key: 'admin.panel', title: 'Admin Panel', description: 'Access admin panel' },
   { key: 'users.manage', title: 'Users', description: 'Manage users' },
   { key: 'permissions.edit', title: 'Permissions', description: 'Edit permissions' },
-  { key: 'permissions.panel', title: 'Permissions add', description: 'Edit permissions' },
+  { key: 'permissions.add', title: 'Permissions add', description: 'Edit permissions' },
 ]
 
 const filteredPermissions = computed(() => {
@@ -36,61 +36,87 @@ function closePanel() {
 </script>
 
 <template>
-  <!-- Overlay -->
-  <div v-if="store.selectedRole" class="fixed inset-0 bg-black/20 z-40" @click="closePanel"></div>
-
-  <!-- Sidebar -->
-  <aside class="fixed top-0 right-0 h-full w-96 bg-white shadow-xl z-50 transform transition-transform duration-300 ease-out
-           border-l border-gray-200 flex flex-col" :class="store.selectedRole ? 'translate-x-0' : 'translate-x-full'">
+  <aside
+    class="h-full rounded-base bg-white border border-default
+           flex flex-col shadow-sm animate-slide-in"
+  >
     <!-- Header -->
-    <div class="flex items-center justify-between p-6 border-b border-gray-200">
+    <div class="p-5 border-b border-default flex items-center justify-between">
       <div>
-        <h2 class="text-lg font-semibold text-gray-900">{{ store.selectedRole?.title }}</h2>
-        <p class="text-sm text-gray-500">Permissions</p>
+        <h2 class="text-lg font-semibold text-heading">
+          {{ store.selectedRole?.title }}
+        </h2>
+        <p class="text-sm text-body">
+          {{ allPermissions.length }} Permissions
+        </p>
       </div>
-      <button @click="closePanel" class="text-gray-400 hover:text-gray-700">
+
+      <button
+        @click="closePanel"
+        class="w-8 h-8 flex items-center justify-center
+               rounded-base border border-default
+               hover:bg-gray-100 transition"
+      >
         ✕
       </button>
     </div>
 
-    <input v-model="search" type="text" placeholder="Search for permissions"
-      class="w-full mb-4 p-2 border rounded-md text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500" />
-
-
-    <div class="flex gap-2 mb-4">
-      <button class="px-3 py-1 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200">
-        Reports (13/14)
-      </button>
-      <button class="px-3 py-1 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200">
-        Admin Panel (15/18)
-      </button>
-      <button class="px-3 py-1 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200">
-        Users (20/40)
-      </button>
-      <button class="px-3 py-1 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200">
-        Permissions (2/6)
-      </button>
+    <!-- Search -->
+    <div class="p-5 pb-0">
+      <input
+        v-model="search"
+        type="text"
+        placeholder="Search for permissions"
+        class="w-full px-3 py-2 rounded-base
+               border border-default text-sm
+               focus:outline-none focus:ring-1 focus:ring-blue-400"
+      />
     </div>
 
-    <div class="space-y-3 max-h-96 overflow-y-auto">
-      <label v-for="p in filteredPermissions" :key="p.key"
-        class="flex items-start gap-3 p-2 border rounded-lg hover:bg-gray-50 cursor-pointer">
-        <input type="checkbox" :checked="store.selectedRole?.permissions?.includes(p.key)" 
-          @change="togglePermission(p.key)" class="mt-1 accent-blue-500 w-5 h-5" />
+    <!-- Tags -->
+    <div class="px-5 pt-4 flex flex-wrap gap-2">
+      <span
+        v-for="tag in ['Reports (13/14)', 'Admin Panel (15/18)', 'Users (20/40)', 'Permissions (2/6)']"
+        :key="tag"
+        class="px-3 py-1 text-xs rounded-full
+               bg-gray-100 text-body"
+      >
+        {{ tag }}
+      </span>
+    </div>
+
+    <!-- Permissions -->
+    <div class="flex-1 overflow-y-auto p-5 space-y-3">
+      <label
+        v-for="p in filteredPermissions"
+        :key="p.key"
+        class="flex gap-3 p-3 rounded-base border border-default
+               hover:bg-gray-50 cursor-pointer"
+      >
+        <input
+          type="checkbox"
+          class="mt-1 w-5 h-5 accent-blue-500"
+          :checked="store.selectedRole?.permissions?.includes(p.key)"
+          @change="togglePermission(p.key)"
+        />
+
         <div>
-          <p class="text-gray-800 font-medium">{{ p.title }}</p>
-          <p class="text-gray-500 text-sm">{{ p.description }}</p>
+          <p class="font-medium text-heading">{{ p.title }}</p>
+          <p class="text-sm text-body">{{ p.description }}</p>
         </div>
       </label>
     </div>
 
-
-    <!-- Footer (optional) -->
-    <div class="p-6 border-t border-gray-200">
-      <button class="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-        @click="closePanel">
+    <!-- Footer -->
+    <div class="p-5 border-t border-default">
+      <button
+        @click="closePanel"
+        class="w-full py-2 rounded-base
+               bg-blue-500 text-white hover:bg-blue-600 transition"
+      >
         Close
       </button>
     </div>
   </aside>
 </template>
+
