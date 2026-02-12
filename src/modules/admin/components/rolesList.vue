@@ -33,19 +33,12 @@ const onEdit = (role: Role) => {
 </script>
 
 <template>
-    <div class="mt-2 p-4 border border-default rounded-base">
-        <RolesCard 
-            v-for="role in rolesStore.roles" 
-            :key="role.id" 
-            :role="role" 
-            @delete="openDeleteModal" 
-            @edit="onEdit"
-            />
+    <div class="mt-2 p-4 rounded-base shadow-sm">
+        <div v-if="rolesStore.rolesCount == 0" class="text-sm flex justify-center font-bold text-gray-500">No roles</div>
+        <RolesCard v-for="role in rolesStore.roles" :key="role.id" :role="role" @delete="openDeleteModal"
+            @edit="onEdit" />
     </div>
 
-    <RoleDeleteModal 
-        v-if="isDeleteOpen && selectedRole" 
-        :role="selectedRole" 
-        @confirm="confirmDelete"
+    <RoleDeleteModal v-if="isDeleteOpen && selectedRole" :role="selectedRole" @confirm="confirmDelete"
         @close="isDeleteOpen = false" />
 </template>

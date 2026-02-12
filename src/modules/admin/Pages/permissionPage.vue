@@ -38,7 +38,7 @@ function closeForm() {
   <div :class="rolesStore.selectedRole ? 'col-span-5 space-y-4' : 'col-span-12 space-y-4'"
        class="transition-all duration-300">
 
-    <div class="p-4 rounded-base border border-default bg-white flex items-center justify-between">
+    <div class="p-4 rounded-base shadow-sm bg-white flex items-center justify-between">
       <div>
         <h2 class="text-lg font-semibold text-heading">Roles</h2>
         <p class="text-sm text-body">
@@ -48,8 +48,9 @@ function closeForm() {
 
       <button
         @click="openCreateForm"
-        class="flex items-center gap-2 px-4 py-2 rounded-base
+        class="flex items-center gap-2 px-2 py-1 rounded-base
                border-2 border-blue-400 text-blue-400
+               
                hover:bg-blue-400 hover:text-white transition"
       >
         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
@@ -65,7 +66,6 @@ function closeForm() {
       </button>
     </div>
 
-    <!-- Форма -->
     <RolesForm
       :open="isOpenForm"
       :is-edit="isEdit"

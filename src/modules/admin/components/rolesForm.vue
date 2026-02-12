@@ -14,6 +14,11 @@ const formData = reactive({
     description: ''
 })
 
+
+const errors = reactive({
+    title: ''
+})
+
 watch(
     () => props.role,
     (role) => {
@@ -34,25 +39,35 @@ const rolesStore = useRolesStore()
 
 const handleSubmit = () => {
     if (props.isEdit && props.role) {
+        if (!formData.title.trim()) {
+            errors.title = 'Title is required'
+            return
+        }
         rolesStore.updateRole({
             id: props.role.id,
             title: formData.title,
             description: formData.description
         })
+        errors.title = ''
     } else {
+        if (!formData.title.trim()) {
+            errors.title = 'Title is required'
+            return
+        }
         rolesStore.addRole({
             title: formData.title,
             description: formData.description
         } as Role)
+        errors.title = ''
     }
 
-emit('close')
+    emit('close')
 }
 
 const handleDelete = () => {
-  if (!props.role) return
-  rolesStore.removeRole(props.role.id)
-  emit('close') 
+    if (!props.role) return
+    rolesStore.removeRole(props.role.id)
+    emit('close')
 }
 
 const emit = defineEmits(
@@ -61,9 +76,9 @@ const emit = defineEmits(
 </script>
 
 <template>
-    <div v-show="open" class="border border-default rounded-base mt-2">
+    <div v-show="open" class="shadow-sm rounded-base mt-2">
         <div class="p-4 border-b border-default flex items-center justify-between">
-            <h2 class="text-lg font-semibold">{{ isEdit ? `Edit role: ${role?.title}` : 'New Role' }}</h2>
+            <h2 class="text-lg font-semibold">{{ isEdit ? `Edit role ${role?.title}` : 'New role' }}</h2>
             <svg @click="emit('close')" class="w-6 h-6 cursor-pointer text-gray-800 hover:text-red-500 transition"
                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -79,6 +94,7 @@ const emit = defineEmits(
                     <input v-model="formData.title" type="text" id="roleName" name="roleName"
                         class="w-full p-2 border border-default rounded-base focus:outline-none focus:ring-2 focus:ring-blue-400"
                         placeholder="Enter role name" />
+                    <p v-if="errors.title" class="text-red-500 text-sm mt-1">{{ errors.title }}</p>
                 </div>
                 <div class="mb-4">
                     <label for="roleDescription" class="block mb-2 text-sm font-medium text-heading">Description</label>
