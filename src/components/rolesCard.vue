@@ -3,7 +3,8 @@ import { useRolesStore } from '../stores/rolesStore';
 import { Role } from '../types/roles';
 
 defineProps<{
-    role: Role
+    role: Role,
+    isEdit: boolean
 }>()
 
 defineEmits<{
@@ -28,14 +29,22 @@ const store = useRolesStore()
             </p>
         </div>
         <div id="icons-card" class="flex gap-2">
-            <svg @click="$emit('edit', role)" class="w-6 h-6 text-gray-800 hover:text-blue-500 active:text-blue-500 active:scale-105" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <svg @click="!isEdit && $emit('edit', role)" :class="[
+                'w-6 h-6',
+                isEdit
+                    ? 'text-gray-400 cursor-not-allowed pointer-events-none'
+                    : 'text-gray-800 hover:text-blue-500 active:scale-105 cursor-pointer'
+            ]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28" />
             </svg>
-            <svg @click="$emit('delete', role)" id="icons-card__delete"
-                class="w-6 h-6 text-gray-800 hover:text-red-500 active:scale-105" aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <svg @click="!isEdit && $emit('delete', role)" :class="[
+                'w-6 h-6',
+                isEdit
+                    ? 'text-gray-400 cursor-not-allowed pointer-events-none'
+                    : 'text-gray-800 hover:text-red-500 active:scale-105 cursor-pointer'
+            ]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M6 18 17.94 6M18 18 6.06 6" />
             </svg>

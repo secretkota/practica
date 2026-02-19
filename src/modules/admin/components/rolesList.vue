@@ -5,6 +5,11 @@ import RoleDeleteModal from '../../../components/roleDeleteModal.vue';
 import { Role } from '../../../types/roles';
 import { useRolesStore } from '../../../stores/rolesStore';
 
+defineProps<{
+  isEdit: boolean
+}>()
+
+
 const emits = defineEmits<{
     (e: 'edit', role: Role): void
 }>()
@@ -35,8 +40,14 @@ const onEdit = (role: Role) => {
 <template>
     <div class="mt-2 p-4 rounded-base shadow-sm">
         <div v-if="rolesStore.rolesCount == 0" class="text-sm flex justify-center font-bold text-gray-500">No roles</div>
-        <RolesCard v-for="role in rolesStore.roles" :key="role.id" :role="role" @delete="openDeleteModal"
-            @edit="onEdit" />
+        <RolesCard 
+            v-for="role in rolesStore.roles" 
+            :key="role.id" 
+            :role="role"
+            :is-edit="isEdit"
+            @delete="openDeleteModal"
+            @edit="onEdit" 
+            />
     </div>
 
     <RoleDeleteModal v-if="isDeleteOpen && selectedRole" :role="selectedRole" @confirm="confirmDelete"

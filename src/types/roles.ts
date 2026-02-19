@@ -4,3 +4,10 @@ export interface Role {
     description: string;
     permissions: string[]
 }
+
+export interface Permission {
+  code: string
+  name: string
+  group: string
+  description: string
+}
