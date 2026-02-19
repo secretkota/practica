@@ -68,7 +68,7 @@ function closePanel() {
           {{ store.selectedRole?.title }}
         </h2>
         <p class="text-sm text-body">
-          {{ permissionsStore.permissions.length }} Permissions
+          {{ store.selectedRole?.permissions.length || 0 }} Permissions
         </p>
       </div>
 
